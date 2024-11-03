@@ -1,4 +1,8 @@
 import { useEffect, useReducer } from "react";
+import Loader from "./components/Loader";
+import Ready from "./components/Ready";
+import Question from "./components/Question";
+import Header from "./components/Header";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -7,17 +11,17 @@ function reducer(state, action) {
         ...state,
         questionData: action.payload,
         status: "ready",
-        error: false,
       };
+    case "start":
+      return { ...state, status: "start" };
     case "error":
-      return { ...state, error: true };
+      return { ...state, status: "error" };
   }
 }
 const initialState = {
   currentIndex: 0,
   questionData: [],
   status: "loading",
-  error: null,
 };
 
 export default function App() {
@@ -40,12 +44,17 @@ export default function App() {
   }, []);
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { currentIndex, questionData, status, error } = state;
+  const { currentIndex, questionData, status } = state;
 
-  console.log(currentIndex, questionData, status, error);
+  // console.log(currentIndex, questionData, status);
   return (
-    <div>
-      <h1>QuizApp</h1>
-    </div>
+    <>
+      <Header />
+      <div className="container">
+        {status === "loading" && <Loader />}
+        {status === "ready" && <Ready dispatch={dispatch} />}
+        {status === "start" && <Question data={questionData[currentIndex]} />}
+      </div>
+    </>
   );
 }
