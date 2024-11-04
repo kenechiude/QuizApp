@@ -66,6 +66,25 @@ header h1 {
   transition: all 0.45s;
 }
 
-.ans-btn:hover {
+.hover:hover,
+.active {
   transform: translateX(15%);
+}
+
+.correctAns {
+  background-color: #530a0a;
+  color: #ffff;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  margin-top: 1.5rem;
+  background-color: #530a0a;
+  color: #ffff;
+  border: none;
+}
+
+.btn-next {
+  /* margin-left: auto; */
 }
