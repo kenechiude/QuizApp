@@ -79,19 +79,13 @@ header h1 {
 .btn {
   padding: 1rem 1.5rem;
   border-radius: 25px;
-  /* margin-top: 1.5rem; */
   font-family: inherit;
   background-color: #530a0a;
   color: #ffff;
   border: none;
 }
 
-.btn-next {
-  /* margin-left: auto; */
-}
-
 progress {
-  /* background-color: #530a0a; */
   width: 100%;
   height: 2rem;
   margin-bottom: 2.5rem;
@@ -103,9 +97,6 @@ progress {
   justify-content: space-between;
   align-items: center;
 }
-
-/* progress::-webkit-progress-bar {
-} */
 
 h2 {
   margin-bottom: 1.5rem;
@@ -124,10 +115,8 @@ h2 {
   border: none;
   padding: 1rem 1.5rem;
   border-radius: 25px;
-  /* color: #ffff; */
 }
 
 .question-btn-div {
-  /* display: ; */
   padding: 0 2rem;
 }

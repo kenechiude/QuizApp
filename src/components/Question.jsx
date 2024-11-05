@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import QuestionInfo from "./QuestionInfo";
-import Answers from "../Answers";
+import Answers from "./Answers";
 import QuestionBtns from "./QuestionBtns";
 
 export default function Question({
@@ -23,10 +23,6 @@ export default function Question({
   return (
     <div>
       <QuestionInfo data={data} />
-
-      {/* TODO: REMOVE LATER */}
-      <p>{data.correctAnswer}</p>
-
       <Answers data={data} dispatch={dispatch} clickedAnswer={clickedAnswer} />
       <QuestionBtns
         timeLeft={timeLeft}
