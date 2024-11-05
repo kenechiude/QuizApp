@@ -4,10 +4,14 @@ export default function QuestionBtns({
   isAtEnd,
   dispatch,
 }) {
+  const minutes = Math.trunc(timeLeft / 60);
+  const seconds = timeLeft % 60;
+
   return (
     <div className="question-btn-div">
       <button className="btn-timer">
-        {Math.trunc(timeLeft / 60)}:{timeLeft % 60}
+        {minutes < 10 ? `0${minutes}` : minutes}:
+        {seconds < 10 ? `0${seconds}` : seconds}
       </button>
       {clickedAnswer && !isAtEnd && (
         <button
