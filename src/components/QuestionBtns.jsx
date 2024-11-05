@@ -21,7 +21,7 @@ export default function QuestionBtns({
           Next
         </button>
       )}
-      {isAtEnd && (
+      {isAtEnd && clickedAnswer && (
         <button className="btn" onClick={() => dispatch({ type: "finish" })}>
           Finish
         </button>
