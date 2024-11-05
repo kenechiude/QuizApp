@@ -4,8 +4,10 @@ import Ready from "./components/Ready";
 import Question from "./components/Question";
 import Header from "./components/Header";
 import Error from "./components/Error";
+import Progress from "./components/Progress";
+import Finish from "./components/Finish";
 
-const POINT_PER_QUESTION = 30;
+const POINT_AND_TIME_PER_QUESTION = 30;
 
 function reducer(state, action) {
   switch (action.type) {
@@ -16,16 +18,29 @@ function reducer(state, action) {
         status: "ready",
       };
     case "start":
-      return { ...state, status: "start" };
+      return {
+        ...state,
+        status: "start",
+        timeLeft: state.questionData.length * POINT_AND_TIME_PER_QUESTION,
+      };
     case "retry":
-      return { ...state, retry: state.retry + 1, status: "loading" };
+      return {
+        ...state,
+        retry: state.retry + 1,
+        status: "loading",
+        points: 0,
+        currentIndex: 0,
+        clickedAnswer: null,
+      };
     case "answered":
+      // TODO!: ALLOCATE DIFFERENT POINTS DEPENDING ON THE QUE DIFFICULTY
+
       return {
         ...state,
         points:
           action.payload ===
           state.questionData[state.currentIndex].correctAnswer
-            ? state.points + POINT_PER_QUESTION
+            ? state.points + POINT_AND_TIME_PER_QUESTION
             : state.points,
         clickedAnswer: action.payload,
       };
@@ -35,6 +50,8 @@ function reducer(state, action) {
         currentIndex: state.currentIndex + 1,
         clickedAnswer: null,
       };
+    case "reduceTimer":
+      return { ...state, timeLeft: state.timeLeft - 1 };
     case "finish":
       return { ...state, status: "finished" };
     case "error":
@@ -50,6 +67,7 @@ const initialState = {
   retry: 0,
   points: 0,
   errorMsg: null,
+  timeLeft: 0,
 };
 
 export default function App() {
@@ -62,12 +80,13 @@ export default function App() {
     retry,
     points,
     errorMsg,
+    timeLeft,
   } = state;
 
-  // console.log(points);
-
   const numQuestion = questionData.length;
-  // console.log(numQuestion);
+
+  // TODO!: ALLOCATE DIFFERENT POINTS DEPENDING ON THE QUE DIFFICULTY
+  const totalPoints = numQuestion * POINT_AND_TIME_PER_QUESTION;
   const isAtEnd = numQuestion === currentIndex + 1;
 
   useEffect(() => {
@@ -81,7 +100,6 @@ export default function App() {
         dispatch({ type: "dataRecieved", payload: data });
       } catch (err) {
         dispatch({ type: "error", payload: err.message });
-        // console.error(err);
       }
     }
 
@@ -94,13 +112,30 @@ export default function App() {
       <div className="container">
         {status === "loading" && <Loader />}
         {status === "ready" && <Ready dispatch={dispatch} />}
-        {status === "start" && (
-          <Question
-            data={questionData[currentIndex]}
-            isAtEnd={isAtEnd}
-            clickedAnswer={clickedAnswer}
+        {status === "finished" && (
+          <Finish
+            points={points}
+            totalPoints={totalPoints}
+            numQuestion={numQuestion}
             dispatch={dispatch}
           />
+        )}
+        {status === "start" && (
+          <>
+            <Progress
+              points={points}
+              totalPoints={totalPoints}
+              currentIndex={currentIndex}
+              numQuestion={numQuestion}
+            />
+            <Question
+              data={questionData[currentIndex]}
+              isAtEnd={isAtEnd}
+              clickedAnswer={clickedAnswer}
+              dispatch={dispatch}
+              timeLeft={timeLeft}
+            />
+          </>
         )}
         {status === "error" && (
           <Error errorMsg={errorMsg} dispatch={dispatch} />

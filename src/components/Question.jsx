@@ -1,57 +1,39 @@
-export default function Question({ data, isAtEnd, clickedAnswer, dispatch }) {
-  function checkClassName(difficulty) {
-    switch (difficulty) {
-      case "easy":
-        return "green";
-      case "medium":
-        return "yellow";
-      case "hard":
-        return "red";
-    }
-  }
-  const diffClassName = checkClassName(data.difficulty);
-  const answers = [...data.incorrectAnswers, data.correctAnswer].sort();
+import { useEffect } from "react";
+import QuestionInfo from "./QuestionInfo";
+import Answers from "../Answers";
+import QuestionBtns from "./QuestionBtns";
+
+export default function Question({
+  data,
+  isAtEnd,
+  clickedAnswer,
+  dispatch,
+  timeLeft,
+}) {
+  if (timeLeft === 0) dispatch({ type: "finish" });
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      dispatch({ type: "reduceTimer" });
+    }, 1000);
+
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <div>
-      <div className="que-info">
-        <span className="category">{data.category.replaceAll("_", " ")}</span>
-        <span className={diffClassName}>{data.difficulty}</span>
-      </div>
+      <QuestionInfo data={data} />
 
       {/* TODO: REMOVE LATER */}
       <p>{data.correctAnswer}</p>
 
-      <h3>{data.question.text}</h3>
-      <div className="answers">
-        {answers.map((ans) => (
-          <button
-            disabled={clickedAnswer}
-            onClick={() => dispatch({ type: "answered", payload: ans })}
-            className={`${
-              data.correctAnswer === ans && clickedAnswer && "correctAns"
-            } ans-btn ${clickedAnswer === ans && "active"} ${
-              !clickedAnswer && "hover"
-            }`}
-            key={ans}
-          >
-            {ans}
-          </button>
-        ))}
-      </div>
-      {clickedAnswer && !isAtEnd && (
-        <button
-          className="btn btn-next"
-          onClick={() => dispatch({ type: "nextQuestion" })}
-        >
-          Next
-        </button>
-      )}
-      {isAtEnd && (
-        <button className="btn" onClick={() => dispatch({ type: "finish" })}>
-          Finish
-        </button>
-      )}
+      <Answers data={data} dispatch={dispatch} clickedAnswer={clickedAnswer} />
+      <QuestionBtns
+        timeLeft={timeLeft}
+        clickedAnswer={clickedAnswer}
+        isAtEnd={isAtEnd}
+        dispatch={dispatch}
+      />
     </div>
   );
 }
