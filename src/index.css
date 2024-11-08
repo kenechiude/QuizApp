@@ -19,11 +19,26 @@ header h1 {
   margin: 0 auto;
 }
 
+.que-info-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
 .que-info {
   display: flex;
   align-items: center;
   gap: 2rem;
-  margin-bottom: 1.5rem;
+}
+
+.btn-finish-now {
+  padding: 0.5rem 1rem;
+  background-color: rgb(122, 24, 24);
+  box-shadow: 2px 5px 10px 0px rgba(138, 133, 133, 0.548);
+  color: #ffff;
+  border-radius: 15px;
+  border: none;
 }
 
 .category {

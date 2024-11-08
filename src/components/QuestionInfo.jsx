@@ -1,4 +1,4 @@
-export default function QuestionInfo({ data }) {
+export default function QuestionInfo({ data, dispatch }) {
   function checkClassName(difficulty) {
     switch (difficulty) {
       case "easy":
@@ -12,9 +12,17 @@ export default function QuestionInfo({ data }) {
   const diffClassName = checkClassName(data.difficulty);
 
   return (
-    <div className="que-info">
-      <span className="category">{data.category.replaceAll("_", " ")}</span>
-      <span className={diffClassName}>{data.difficulty}</span>
+    <div className="que-info-div">
+      <div className="que-info">
+        <span className="category">{data.category.replaceAll("_", " ")}</span>
+        <span className={diffClassName}>{data.difficulty}</span>
+      </div>
+      <button
+        className="btn-finish-now"
+        onClick={() => dispatch({ type: "finish" })}
+      >
+        Finish Now!
+      </button>
     </div>
   );
 }

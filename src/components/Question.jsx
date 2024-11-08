@@ -21,8 +21,8 @@ export default function Question({
   }, []);
 
   return (
-    <div>
-      <QuestionInfo data={data} />
+    <>
+      <QuestionInfo data={data} dispatch={dispatch} />
       <Answers data={data} dispatch={dispatch} clickedAnswer={clickedAnswer} />
       <QuestionBtns
         timeLeft={timeLeft}
@@ -30,6 +30,6 @@ export default function Question({
         isAtEnd={isAtEnd}
         dispatch={dispatch}
       />
-    </div>
+    </>
   );
 }
