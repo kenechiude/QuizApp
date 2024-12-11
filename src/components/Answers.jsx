@@ -1,4 +1,7 @@
-export default function Answers({ data, clickedAnswer, dispatch }) {
+import { useQuestion } from "../QuestionContext";
+
+export default function Answers() {
+  const { data, clickedAnswer, dispatch } = useQuestion();
   const answers = [...data.incorrectAnswers, data.correctAnswer].sort();
 
   return (

@@ -1,9 +1,7 @@
-export default function QuestionBtns({
-  timeLeft,
-  clickedAnswer,
-  isAtEnd,
-  dispatch,
-}) {
+import { useQuestion } from "../QuestionContext";
+
+export default function QuestionBtns() {
+  const { timeLeft, clickedAnswer, isAtEnd, dispatch } = useQuestion();
   const minutes = Math.trunc(timeLeft / 60);
   const seconds = timeLeft % 60;
 

@@ -1,4 +1,8 @@
-export default function Finish({ points, totalPoints, numQuestion, dispatch }) {
+import { useQuestion } from "../QuestionContext";
+
+export default function Finish() {
+  const { points, totalPoints, numQuestion, dispatch } = useQuestion();
+
   const percentage = (points / totalPoints) * 100;
   return (
     <>

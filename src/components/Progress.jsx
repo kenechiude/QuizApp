@@ -1,9 +1,8 @@
-export default function Progress({
-  points,
-  totalPoints,
-  currentIndex,
-  numQuestion,
-}) {
+import { useQuestion } from "../QuestionContext";
+
+export default function Progress() {
+  const { points, totalPoints, currentIndex, numQuestion } = useQuestion();
+
   return (
     <>
       <div className="progressDetails">

@@ -1,15 +1,11 @@
+import { useQuestion } from "../QuestionContext";
 import { useEffect } from "react";
 import QuestionInfo from "./QuestionInfo";
 import Answers from "./Answers";
 import QuestionBtns from "./QuestionBtns";
 
-export default function Question({
-  data,
-  isAtEnd,
-  clickedAnswer,
-  dispatch,
-  timeLeft,
-}) {
+export default function Question() {
+  const { data, isAtEnd, clickedAnswer, dispatch, timeLeft } = useQuestion();
   if (timeLeft === 0) dispatch({ type: "finish" });
 
   useEffect(() => {

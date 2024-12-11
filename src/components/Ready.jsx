@@ -1,4 +1,8 @@
-export default function Ready({ dispatch }) {
+import { useQuestion } from "../QuestionContext";
+
+export default function Ready() {
+  const { dispatch } = useQuestion();
+
   return (
     <div>
       <h2>Write message LATER!!!</h2>

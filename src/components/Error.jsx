@@ -1,4 +1,8 @@
-export default function Error({ errorMsg, dispatch }) {
+import { useQuestion } from "../QuestionContext";
+
+export default function Error() {
+  const { errorMsg, dispatch } = useQuestion();
+
   return (
     <div>
       <h3>{errorMsg || "Unexpected Error occured"}</h3>

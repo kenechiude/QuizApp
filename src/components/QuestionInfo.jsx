@@ -1,14 +1,18 @@
-export default function QuestionInfo({ data, dispatch }) {
-  function checkClassName(difficulty) {
-    switch (difficulty) {
-      case "easy":
-        return "green";
-      case "medium":
-        return "yellow";
-      case "hard":
-        return "red";
-    }
+import { useQuestion } from "../QuestionContext";
+
+function checkClassName(difficulty) {
+  switch (difficulty) {
+    case "easy":
+      return "green";
+    case "medium":
+      return "yellow";
+    case "hard":
+      return "red";
   }
+}
+
+export default function QuestionInfo() {
+  const { data, dispatch } = useQuestion();
   const diffClassName = checkClassName(data.difficulty);
 
   return (
